@@ -24,8 +24,8 @@ BearLang has the following primitive types:
 ## Special types
 
 - None: Special struct with zero size.
-- Array: Each sized type, with non-zero size, also has an associated array type. For example Boolean's associated array type is Boolean[]. Can create arrays with the notation `[valueA, valueB]`.
-- Optional: Each sized type, with non-zero size, also has an associated optional type. For example Boolean's associated array type is Boolean?. This type is equivalent to an enum with variants None and Boolean. Can create optionals with the notation `Boolean?(true)` or `Boolean?(None())` for the null value.
+- Array: Each sized type, with non-zero size, also has an associated array type. For example Boolean's associated array type is `Array<Boolean>`. Can create arrays with the notation `[valueA, valueB]`.
+- Optional: Each sized type, with non-zero size, also has an associated optional type. For example Boolean's associated array type is `Optional<Boolean>`. This type is equivalent to an enum with variants None and Boolean. Can create optionals with the notation `Optional<Boolean>(true)` or `Optional<Boolean>(None())` for the null value.
 
 ## Arrays
 
