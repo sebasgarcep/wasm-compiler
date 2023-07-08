@@ -60,14 +60,18 @@ Variables are scoped, i.e. the following code will fail to compile:
 print(x)
 ```
 
+## Statements as expressions
+
+All statements in BearLang are expressions.
+
 ## Scopes as expressions
 
-A scope is itself an expression and the final line is the return value for the scope if it lacks a semicolon. Therefore the following code is perfectly valid code on BearLang:
+A scope is itself an expression and the final line is the return value. Therefore the following code is perfectly valid code on BearLang:
 
 ```
 var y = {
     var x = 100;
-    x * 2
+    x * 2;
 };
 ```
 
@@ -224,7 +228,7 @@ operator +(lhs: Example, rhs: Example): Int64 {
 
 ## Entrypoint
 
-The entrypoint for the program is a function named `main`.
+The entrypoint for the program is a function named `main` which takes an array of string values as input.
 
 ## Code splitting
 
