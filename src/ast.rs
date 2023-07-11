@@ -1,6 +1,6 @@
 // TODO: CREATE INDIRECTION TO MAKE ALL TYPES SIZED
 
-enum Line {
+enum Statement {
     Expression(Expression),
     Assignment(Assignment),
     While(While),
@@ -22,8 +22,8 @@ enum Expression {
     FunctionCall(FunctionCall),
     Variable(Variable),
     Literal(Literal),
-    Condition, // TODO
-    Match, // TODO
+    // Condition, // TODO
+    // Match, // TODO
 }
 
 enum OperatorIdentifier {
@@ -55,7 +55,7 @@ struct Variable {
 }
 
 struct Scope {
-    lines: Vec<Line>,
+    statements: Vec<Statement>,
 }
 
 enum Literal {
