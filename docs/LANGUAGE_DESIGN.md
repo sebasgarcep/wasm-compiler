@@ -25,7 +25,6 @@ BearLang has the following primitive types:
 
 - None: Special struct with zero size.
 - Array: Each sized type, with non-zero size, also has an associated array type. For example Boolean's associated array type is `Array<Boolean>`. Can create arrays with the notation `[valueA, valueB]`.
-- Optional: Each sized type, with non-zero size, also has an associated optional type. For example Boolean's associated array type is `Optional<Boolean>`. This type is equivalent to an enum with variants None and Boolean. Can create optionals with the notation `Optional<Boolean>(true)` or `Optional<Boolean>(None())` for the null value.
 
 ## Arrays
 
@@ -38,24 +37,19 @@ Variables can be defined with the keyword `var`:
 Example:
 
 ```
-var x: Int64 = 100;
-var y: Float64 = 12.0;
-y = 37.0;
-```
-
-Note that the type of variables can be inferred, making the following code equivalent to the previous one:
-
-```
 var x = 100;
 var y = 12.0;
 y = 37.0;
 ```
 
+Note that the type of variables will be inferred.
+
+
 Variables are scoped, i.e. the following code will fail to compile:
 
 ```
 {
-    var x: Int64 = 100;
+    var x = 100;
 }
 print(x)
 ```
@@ -93,24 +87,6 @@ var x = Example(300, 1.5);
 ```
 
 Any valid sized type can become a struct field, and a struct can have no fields (useful for enums which we will discuss in the next section).
-
-## Enums
-
-Enums can be declared using the `enum` keyword:
-
-```
-struct FirstVariant(x: Int64);
-
-struct SecondVariant(y: Float64);
-
-enum ExampleEnum(FirstVariant, SecondVariant);
-```
-
-We can initialize an enum with:
-
-```
-var enumValue = ExampleEnum(FirstVariant(100));
-```
 
 ## Control flow - If
 
@@ -150,34 +126,6 @@ while (x > 0) {
 };
 ```
 
-## Control flow - Match statements
-
-The syntax for `match` statements is:
-
-```
-match (enumValue) (
-    FirstVariant(x) {
-        print(to_string(x))
-    },
-    else {
-        print("Not Found")
-    },
-);
-```
-
-If we want to return a value from a `match` statement we can:
-
-```
-var y = match (enumValue) (
-    FirstVariant(x) {
-        x
-    },
-    else {
-        0
-    },
-);
-```
-
 ## Functions
 
 Functions are defined using the `function` keyword as follows:
@@ -212,11 +160,15 @@ Are functions on two variables that instead of being written in a prefix format 
 - `^`
 - `&`
 - `|`
+- `>`
+- `>=`
+- `<`
+- `<=`
 - `>>`
 - `<<`
-- `and`
-- `or`
-- `xor`
+- `&&`
+- `||`
+- `%%`
 
 To overload an operator one can write:
 
