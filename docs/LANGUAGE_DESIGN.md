@@ -29,6 +29,7 @@ Example:
 var x = 100.0;
 var y = 12.0;
 y = 37.0;
+var z = [1.0, 3.4];
 ```
 
 Note that the type of variables will be inferred.
