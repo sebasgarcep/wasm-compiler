@@ -12,23 +12,12 @@ BearLang will compile down to WASM.
 
 BearLang is a statically typed language.
 
-## Primite types
+## Types
 
-BearLang has the following primitive types:
-- Boolean (`true` and `false` keywords)
-- Int64 (Numbers without a dot)
-- Float64 (Numbers with a dot)
-- String (Denoted by `"..."`, stored as a reference to a char array to ensure size)
-- Void (Empty, zero-sized type)
-
-## Special types
-
-- None: Special struct with zero size.
-- Array: Each sized type, with non-zero size, also has an associated array type. For example Boolean's associated array type is `Array<Boolean>`. Can create arrays with the notation `[valueA, valueB]`.
-
-## Arrays
-
-Arrays are a special type that is generated for every built-in and user-generated type.
+BearLang has the following types:
+- Number (Float64)
+- Array (Array of Float64)
+- Void (Zero-sized type)
 
 ## Variable
 
@@ -37,7 +26,7 @@ Variables can be defined with the keyword `var`:
 Example:
 
 ```
-var x = 100;
+var x = 100.0;
 var y = 12.0;
 y = 37.0;
 ```
@@ -54,65 +43,18 @@ Variables are scoped, i.e. the following code will fail to compile:
 print(x)
 ```
 
-## Statements as expressions
-
-All statements in BearLang are expressions.
-
-## Scopes as expressions
-
-A scope is itself an expression and the final line is the return value. Therefore the following code is perfectly valid code on BearLang:
-
-```
-var y = {
-    var x = 100;
-    x * 2;
-};
-```
-
-## Structs
-
-A struct is defined with the keyword `struct`. For example:
-
-```
-struct Example(
-    i: Int64,
-    j: Float64,
-);
-```
-
-and structs can be initialized using the struct name:
-
-```
-var x = Example(300, 1.5);
-```
-
-Any valid sized type can become a struct field, and a struct can have no fields (useful for enums which we will discuss in the next section).
-
 ## Control flow - If
 
 The syntax for `if` statements is:
 
 ```
 if (x == 100) {
-    print("A")
+    print(100)
 } else if (x == 200) {
-    print("B")
+    print(200)
 } else {
-    print("C")
+    print(300)
 };
-```
-
-Each arm of the `if` statement can return a value:
-
-```
-var y = 
-    if (x == 100) {
-        150
-    } else if (x == 200) {
-        250
-    } else {
-        x
-    };
 ```
 
 ## Control flow - While loops
@@ -121,7 +63,7 @@ The syntax for `while` loops is:
 
 ```
 while (x > 0) {
-    print(String(x));
+    print(x);
     x = x - 1;
 };
 ```
@@ -131,19 +73,16 @@ while (x > 0) {
 Functions are defined using the `function` keyword as follows:
 
 ```
-function getExampleFirstField(example: Example): Int64 {
-    example.i
+function getExampleFirstField(example: Number): Number {
+    return index(example, 0);
 }
 ```
 
-Note that the return value is required, even if it can be inferred. If the return value is not set it will be assumed to be Void. If you wish to early-return or to explicitly return at the end of a function, the `return` keyword can be used:
+Note that the return value is required, even if it can be inferred. If the return value is not set it will be assumed to be Void. To return a value from a function the `return` keyword should be used:
 
 ```
-function getExampleField(example: Example, fieldNum: Int64): Int64 {
-    if (fieldNum == 1) {
-        return example.i;
-    }
-    example.i * 2
+function getExampleField(example: Array, fieldNum: Number): Number {
+    return index(example, fieldNum) * 2;
 }
 ```
 
@@ -158,29 +97,24 @@ Are functions on two variables that instead of being written in a prefix format 
 - `*`
 - `/`
 - `^`
-- `&`
-- `|`
+- `==`
+- `=`
 - `>`
 - `>=`
 - `<`
 - `<=`
-- `>>`
-- `<<`
-- `&&`
-- `||`
-- `%%`
 
 To overload an operator one can write:
 
 ```
-operator +(lhs: Example, rhs: Example): Int64 {
-    lhs.i + rhs.i
+operator +(lhs: Number, rhs: Number): Number {
+    lhs + rhs
 }
 ```
 
 ## Entrypoint
 
-The entrypoint for the program is a function named `main` which takes an array of string values as input.
+The entrypoint for the program is a function named `main` which takes an Array as input.
 
 ## Code splitting
 
@@ -190,10 +124,8 @@ BearLang will feature no code-splitting functionality.
 
 The following built-in functions are available:
 
-- `print`: outputs a string to STDOUT.
-- `not`: negates a boolean value.
-- `to_string`: converts a value into a string.
-- `index`: get the element at a particular index of an array. Returns Optional.
+- `print`: outputs to STDOUT.
+- `index`: get the element at a particular index of an array.
 - `length`: returns size of an array.
 
 ## Memory management

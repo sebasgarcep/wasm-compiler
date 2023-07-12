@@ -1,6 +1,6 @@
 mod ast;
 mod parser;
-mod tokenizer;
+mod lexer;
 
 fn main() {
     println!("Hello, world!");

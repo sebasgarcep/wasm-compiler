@@ -77,7 +77,7 @@ impl Tokenizer {
 
 #[cfg(test)]
 mod tests {
-    use crate::tokenizer::{Tokenizer};
+    use crate::lexer::{Tokenizer};
     use std::fs;
 
     #[test]
