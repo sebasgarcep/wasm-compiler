@@ -1,8 +1,6 @@
 (module
-  (import "imports" "print" (func $i (param i64)))
-  (func $j
-    i64.const 100
-    call $i
+  (func $main (result i32)
+    i32.const 1
   )
-  (start $j)
+  (export "main" (func $main))
 )

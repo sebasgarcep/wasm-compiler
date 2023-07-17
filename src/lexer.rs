@@ -20,12 +20,11 @@ impl Tokenizer {
         self.result.push(token);
         self.token_characters.clear();
     }
-    
+
     fn is_token_break(character: &char) -> bool {
         return character.is_whitespace() || Tokenizer::is_special_character(&character);
     }
-    
-    // FIXME: THIS TOKENIZER IS NOT CORRECT FOR THE LANGUAGE
+
     fn is_special_character(character: &char) -> bool {
         return match character {
             | '('
@@ -47,7 +46,7 @@ impl Tokenizer {
             _ => false,
         }
     }
-    
+
     fn should_consume(character: &char) -> bool {
         return !character.is_whitespace();
     }
@@ -81,13 +80,10 @@ mod tests {
     use std::fs;
 
     #[test]
-    fn tokenize_basic_program_correctly() {
-        let basic_program = fs::read_to_string("samples/basic-bear/main.bear").unwrap();
-        let tokens = vec![
-            "function", "main", "(", "args", ":", "Array<String>", ")", "{",
-            "print", "(", "\"", "Hello", "World!", "\"", ")", ";",
-            "}", ";",
-        ];
+    fn tokenize_simple_program_correctly() {
+        let basic_program = fs::read_to_string("samples/01-simple/main.c").unwrap();
+        let tokens_text = fs::read_to_string("samples/01-simple/tokens.txt").unwrap();
+        let tokens: Vec<_> = tokens_text.split("\n").collect();
         assert_eq!(Tokenizer::tokenize(basic_program.to_owned()).collect::<Vec<_>>(), tokens);
     }
 }
