@@ -1,5 +1,3 @@
-mod ast;
-mod parser;
 mod lexer;
 
 fn main() {
