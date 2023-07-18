@@ -2,21 +2,21 @@ use std::iter::Peekable;
 
 use crate::ast::{Program, Declaration, Function, Scope, Argument, TypeAnnotation, Statement, Expression, Literal};
 
-struct Parser<I> where I: Iterator<Item = String> {
+pub struct Parser<I> where I: Iterator<Item = String> {
     tokens: Peekable<I>
 }
 
 impl <I> Parser<I> where I: Iterator<Item = String> {
-    fn has_more_tokens(&mut self) -> bool {
-        self.tokens.peek().is_some()
-    }
-
-    fn parse(tokens: I) -> Box<Program> {
+    pub fn parse(tokens: I) -> Box<Program> {
         let mut parser = Parser {
             tokens: tokens.peekable(),
         };
         
         Box::new(parser.parse_program())
+    }
+
+    fn has_more_tokens(&mut self) -> bool {
+        self.tokens.peek().is_some()
     }
 
     fn parse_program(&mut self) -> Program {
