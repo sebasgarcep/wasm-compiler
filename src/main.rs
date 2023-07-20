@@ -1,29 +1,32 @@
 mod assembler;
 mod ast;
+mod cli;
 mod lexer;
 mod parser;
 
-use std::env;
 use std::fs;
 
+use clap::Parser as CLIParser;
+
 use crate::assembler::Assembler;
+use crate::cli::CLIArguments;
 use crate::lexer::Lexer;
 use crate::parser::Parser;
 
 fn main() {
-    let args: Vec<String> = env::args().collect();
-    let mode = &args[1];
-    let filepath = &args[2];
-    let contents = fs::read_to_string(filepath).expect(
+    let args = CLIArguments::parse();
+    let contents = fs::read_to_string(args.input).expect(
         "Failed to read file.",
     );
     let tokens = Lexer::tokenize(contents);
     let ast = Parser::parse(tokens);
     // FIXME: IMPLEMENT ANALYZER
-    match mode.as_str() {
+    match args.mode.as_str() {
         "wat" => {
             let result = Assembler::to_wat(ast);
-            println!("{}", result);
+            fs::write(args.output, result).expect(
+                "Failed to write to file."
+            );
         },
         _ => {
             panic!("Invalid mode.");
